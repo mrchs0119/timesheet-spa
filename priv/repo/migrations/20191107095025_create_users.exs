@@ -8,7 +8,6 @@ defmodule Timesheetspa.Repo.Migrations.CreateUsers do
       add :manager_email, :string, default: nil, null: true
       add :is_manager, :boolean, default: false, null: false
       add :password_hash, :string, default: "", null: false
-
       timestamps()
     end
 
