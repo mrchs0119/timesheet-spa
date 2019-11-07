@@ -1,0 +1,21 @@
+upstream timesheetspa_app {
+    server localhost:5288;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name time2.mrchs0119.fun;
+
+    location / {
+        proxy_pass http://timesheetspa_app;
+    }
+
+    location /socket {
+        proxy_pass http://timesheetspa_app;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
