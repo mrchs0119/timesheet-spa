@@ -1,12 +1,13 @@
 defmodule Timesheetspa.Tasks.Task do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Timesheetspa.Jobs.Job
 
   schema "tasks" do
-    field :desc, :string
     field :hours, :integer
-    field :job_id, :id
-    field :sheet_id, :id
+    field :desc, :string
+    belongs_to :job, Timesheetspa.Jobs.Job
+    belongs_to :sheet, Timesheetspa.Sheets.Sheet
 
     timestamps()
   end
@@ -14,7 +15,27 @@ defmodule Timesheetspa.Tasks.Task do
   @doc false
   def changeset(task, attrs) do
     task
-    |> cast(attrs, [:hours, :desc])
-    |> validate_required([:hours, :desc])
+    |> cast(attrs, [:hours, :desc, :job_id])
+    |> validate_required([:hours, :job_id])
+    |> case do
+    %{valid?: false, changes: changes} = changeset when changes == %{} ->
+      # If the changeset is invalid and has no changes, it is
+      # because all required fields are missing, so we ignore it.
+      %{changeset | action: :ignore}
+    changeset ->
+      changeset
   end
+  end
+  def validate_repo_existence(%{valid?: false} = changeset), do: changeset
+  def attrs_help(attrs) do
+    if (attrs["task"] != "" && attrs["task"] != nil) do 
+      attrs = Map.put(attrs, "job_id", Timesheetspa.Jobs.get_job_by_job_code(attrs["task"]).id)
+      attrs
+    else
+      attrs = Map.put(attrs, "hours", "")
+
+      attrs
+    end 
+  end
+  
 end

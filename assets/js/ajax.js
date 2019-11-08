@@ -81,10 +81,10 @@ export function list_photos() {
     });
 }
 
-export function submit_new_sheet(form) {
+export function submit_new_photo(form) {
   let state = store.getState();
   console.log("state", state);
-  let data = state.forms.new_sheet;
+  let data = state.forms.new_photo;
 
   if (data.file == null) {
     return;
@@ -92,7 +92,7 @@ export function submit_new_sheet(form) {
 
   let reader = new FileReader();
   reader.addEventListener("load", () => {
-    post('/sheets', {
+    post('/photos', {
       photo: {
         desc: data.desc,
         filename: data.file.name,
@@ -103,14 +103,14 @@ export function submit_new_sheet(form) {
       console.log(resp);
       if (resp.data) {
         store.dispatch({
-          type: 'ADD_SHEETS',
+          type: 'ADD_PHOTOS',
           data: [resp.data],
         });
-        form.redirect('/sheets/' + resp.data.id);
+        form.redirect('/photos/' + resp.data.id);
       }
       else {
         store.dispatch({
-          type: 'CHANGE_NEW_SHEET',
+          type: 'CHANGE_NEW_PHOTO',
           data: {errors: JSON.stringify(resp.errors)},
         });
       }
@@ -131,7 +131,7 @@ export function submit_login(form) {
         localStorage.setItem('session', JSON.stringify(resp));
         store.dispatch({
           type: 'LOG_IN',
-          data: resp.data,
+          data: resp,
         });
         form.redirect('/');
       }

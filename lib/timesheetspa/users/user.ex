@@ -8,6 +8,11 @@ defmodule Timesheetspa.Users.User do
     field :password_hash, :string
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
+    field :is_manager, :boolean
+    field :manager_email, :string
+
+    has_many :sheets, Timesheetspa.Sheets.Sheet
+    has_many :jobs, Timesheetspa.Jobs.Job
 
     timestamps()
   end

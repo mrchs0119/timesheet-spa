@@ -1,6 +1,24 @@
 import { createStore, combineReducers } from 'redux';
 import deepFreeze from 'deep-freeze-strict';
 
+/* Structure of store data:
+ * {
+ *   forms: {
+ *     new_photo: {...},
+ *     edit_photo: {...},
+ *     new_user: {...},
+ *     edit_user: {...},
+ *   },
+ *   users: Map.new(
+ *     1 => {id: 1, name: "Alice", email: "alice@example.com"},
+ *     ...
+ *   ),
+ *   photos: Map.new(
+ *     1 => {id: 1, data: "...", desc: "...", tags: [...]},
+ *     ...
+ *   ),
+ * }
+ */
 
 function new_photo(st0 = {file: null, desc: "", errors: null}, action) {
   switch (action.type) {
