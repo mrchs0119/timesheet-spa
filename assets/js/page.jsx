@@ -34,12 +34,11 @@ function Page(props) {
                 Users
               </NavLink>
             </Nav.Item>
-	  if (session){
 	    <Nav.Item>
     	      <NavLink to="/sheets/new" exact activeClassName="active" className="nav-link">
                 New Timesheet
     	      </NavLink>
-  	    </Nav.Item>}
+  	    </Nav.Item>
           </Nav>
         </Col>
         <Col md="4">
