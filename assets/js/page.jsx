@@ -5,6 +5,7 @@ import { Navbar, Nav, Col } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
 
 import Login from './login';
+import Signup from './signup';
 import SheetsNew from './sheets/new';
 import store from './store';
 
@@ -33,11 +34,12 @@ function Page(props) {
                 Users
               </NavLink>
             </Nav.Item>
+	  if (session){
 	    <Nav.Item>
     	      <NavLink to="/sheets/new" exact activeClassName="active" className="nav-link">
                 New Timesheet
     	      </NavLink>
-  	    </Nav.Item>
+  	    </Nav.Item>}
           </Nav>
         </Col>
         <Col md="4">
@@ -51,6 +53,10 @@ function Page(props) {
         <Route exact path="/login">
           <Login />
         </Route>
+	<Route exact path="/signup">
+          <Signup />
+        </Route>
+
       </Switch>
     </Router>
   );
@@ -83,6 +89,11 @@ let Session = connect(({session}) => ({session}))(({session, dispatch}) => {
         <Nav.Item>
           <NavLink to="/login" exact activeClassName="active" className="nav-link">
             Login
+          </NavLink>
+        </Nav.Item>
+	<Nav.Item>
+          <NavLink to="/signup" exact activeClassName="active" className="nav-link">
+            SignUp
           </NavLink>
         </Nav.Item>
       </Nav>

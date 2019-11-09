@@ -120,6 +120,35 @@ export function submit_new_photo(form) {
   reader.readAsDataURL(data.file);
 }
 
+export function add_user(form) {
+  let state = store.getState();
+  console.log("state", state);
+  let data = state.forms.new_user;
+  post('/users', {
+	  user: {
+	    name: data.name,
+	    email: data.email,
+	    password: data.password,
+	    password_confirmation: data.password_confirmation
+	  }
+        }).then((resp) => {
+	  console.log(resp);
+          if(resp.data) {
+            store.dispatch({
+            type: 'NEW_USER',
+            data: [resp.data],
+       });
+       form.redirect('/')
+     }
+     else {
+      store.dispatch({
+        type: 'CHANGE_NEW_USER',
+        data: {errors: JSON.stringify(resp.errors)},
+      });
+    }
+  });
+}
+
 export function submit_login(form) {
   let state = store.getState();
   let data = state.forms.login;

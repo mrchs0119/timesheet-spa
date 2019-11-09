@@ -29,6 +29,15 @@ function new_photo(st0 = {file: null, desc: "", errors: null}, action) {
   }
 }
 
+function new_user(st0 = {name: "", email: "",  password: "", password_confirmation: "", errors: null}, action) {
+    switch(action.type) {
+        case 'CHANGE_NEW_USER':
+            return Object.assign({}, st0, action.data)
+        default:
+            return st0
+    }
+}
+
 function login(st0 = {email: "", password: "", errors: null}, action) {
   switch(action.type) {
     case 'CHANGE_LOGIN':
@@ -42,11 +51,18 @@ function forms(st0, action) {
   let reducer = combineReducers({
    
     login,
+    
   });
   return reducer(st0, action);
 }
 
 function users(st0 = new Map(), action) {
+  switch (action.type) {
+    case 'NEW_USER':
+      let st1 =new Map(st0);
+      st1.set(action.data.id,action.data);
+      return st1;
+  }
   return st0;
 }
 
@@ -79,11 +95,11 @@ function session(st0 = session0, action) {
 }
 
 function root_reducer(st0, action) {
-  console.log("root reducer", st0, action);
+  console.log("root reduce", st0, action);
   let reducer = combineReducers({
     forms,
     users,
-    session,
+    session
   });
   return deepFreeze(reducer(st0, action));
 }

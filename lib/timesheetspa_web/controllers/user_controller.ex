@@ -12,11 +12,19 @@ defmodule TimesheetspaWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Users.create_user(user_params) do
+    user = Users.get_user_by_email(user_params["email"])
+    if !user do
+      with {:ok, %User{} = user} <- Users.create_user(user_params) do
+        conn
+        |> put_status(:created)
+        |> put_resp_header("location", Routes.user_path(conn, :show, user))
+        |> render("show.json", user: user)
+      end
+    else
+      resp = %{errors: "User with same email already exists"}
       conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
+      |> put_resp_header("content-type", "application/json; charset=UTF-8")
+      |> send_resp(:unauthorized, Jason.encode!(resp))
     end
   end
 
