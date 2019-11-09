@@ -4,7 +4,7 @@ use Mix.Config
 config :timesheetspa, Timesheetspa.Repo,
   username: "timesheetspa",
   password: "ahch2XeeneTh",
-  database: "timesheetspa_test",
+  database: "timesheetspa_prod",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
