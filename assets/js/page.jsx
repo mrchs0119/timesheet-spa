@@ -30,8 +30,8 @@ function Page(props) {
               </NavLink>
             </Nav.Item>
             <Nav.Item>
-              <NavLink to="/users" exact activeClassName="active" className="nav-link">
-                Users
+              <NavLink to="/dashboard" exact activeClassName="active" className="nav-link">
+                DashBoard
               </NavLink>
             </Nav.Item>
 	    <Nav.Item>
@@ -57,6 +57,7 @@ function Page(props) {
         </Route>
 
       </Switch>
+  
     </Router>
   );
 }

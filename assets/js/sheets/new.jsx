@@ -12,14 +12,23 @@ export default function SheetsNew(props) {
         <Form.Label>Date</Form.Label>
         <Form.Control type="date" />
       </Form.Group>
+      <Form.Group controlId="hours">
+	<Form.Label>Hours</Form.Label>
+	<Form.Control as="select">
+	  <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+        </Form.Control>
+      </Form.Group>
       <Form.Group controlId="desc">
         <Form.Label>Description</Form.Label>
         <Form.Control as="textarea" rows="3" />
       </Form.Group>
-      <Form.Group controlId="new_task">
-        <Button variant="primary">+ New Task</Button>
-      </Form.Group>
-
       <Form.Group controlId="submit">
         <Button variant="primary" onClick={() => submit_new_sheet(this)}>Upload Timesheet</Button>
       </Form.Group>
